@@ -1,0 +1,339 @@
+/* Analysis Results */
+.results-area {
+    margin-top: 1rem;
+}
+
+.analysis-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.analysis-section h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-main);
+}
+
+.analysis-section h4 i {
+    margin-right: 10px;
+    color: #1976d2;
+}
+
+.stage-status {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stage-completed {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.stage-skipped {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.stage-failed {
+    background-color: #ffcdd2;
+    color: #c62828;
+}
+
+/* Remove the debug CSS and use this proper styling */
+.analysis-details {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.detail-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 0.75rem !important;
+    background: white !important;
+    border-radius: 8px !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.detail-label {
+    font-weight: 500 !important;
+    color: #666 !important;
+}
+
+.detail-value {
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+/* Hover effect for boxes */
+.detail-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.2s ease !important;
+}
+
+.confidence-bar {
+    height: 15px;
+    background-color: #e3f2fd;
+    border-radius: 10px;
+    margin-top: 1rem;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.confidence-level {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hash Display */
+.hash-display {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    margin: 1rem 0;
+}
+
+/* ========================================
+   FILE HEADER LAYOUT FIX - ADD THIS SECTION
+   ======================================== */
+
+/* File Header Layout Fix */
+.file-analysis-result {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.file-header {
+    /* Ensure proper background */
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 1.5rem;
+    font-weight: 600;
+    
+    /* Proper flexbox layout */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Ensure no margin/padding issues */
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.file-header .file-icon {
+    font-size: 1.3rem;
+    color: #f39c12;
+    margin-right: 10px;
+}
+
+/* Classification Badge Styling */
+.classification-badge {
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.classification-badge.benign {
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+}
+
+.classification-badge.malware {
+    background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+    color: white;
+}
+
+.classification-badge.unknown {
+    background: linear-gradient(135deg, #ff9800 0%, #ffa726 100%);
+    color: white;
+}
+
+/* Confidence Percentage */
+.confidence-percentage {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .file-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .file-header h3 {
+        justify-content: center;
+    }
+    
+    .classification-badge {
+        align-self: center;
+    }
+}
+
+
+
+
+
+/* Use existing result-header and file-info classes */
+.result-header {
+    background: hsl(0, 0%, 4%);
+    color: white;
+    padding: 20px 40px;  /* Increased from 12px 20px - more top/bottom space and left indent */
+    border-radius: 12px 12px 0 0;
+    margin: -2rem -2rem 2rem -2rem;  /* Increased bottom margin from 1.5rem to 2rem for more space */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-info h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-info h3::before {
+    content: "\f15b";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+/* Dynamic result badge colors - system assigned */
+.result-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+/* Safe/Benign classification */
+.result-badge.result-safe {
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    color: white;
+}
+
+/* Threat/Ransomware classification */
+.result-badge.result-threat {
+    background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+/* Unknown classification */
+.result-badge.result-unknown {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+}
+
+/* Result card styling */
+.result-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+}
+
+.xai-section {
+    background: white !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+}
+
+.feature-contribution {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0.5rem !important;
+    background: var(--bg-container) !important;
+    border-radius: 6px !important;
+    border: 1px solid #e0e0e0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.feature-name {
+    font-weight: 500 !important;
+    color: #333 !important;
+    font-size: 0.9rem !important;
+}
+
+.feature-impact {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+}
+
+.impact-positive {
+    color: #f44336 !important;
+}
+
+.impact-negative {
+    color: #4caf50 !important;
+}

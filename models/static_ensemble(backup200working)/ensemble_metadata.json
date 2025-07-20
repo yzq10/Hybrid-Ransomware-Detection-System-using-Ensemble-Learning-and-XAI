@@ -1,0 +1,10 @@
+{
+  "models": [
+    "XGBoost",
+    "SVM",
+    "RandomForest"
+  ],
+  "feature_count": 225,
+  "training_date": "2025-07-02 16:02:32",
+  "random_state": 42
+}

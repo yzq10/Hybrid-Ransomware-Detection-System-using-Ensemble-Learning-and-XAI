@@ -1,0 +1,188 @@
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 25px;
+    background: transparent;
+    transition: transform 0.3s ease-in-out; /* Add this line */
+}
+
+.nav-container {
+    background: var(--bg-navbar);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    min-height: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.nav-brand i {
+    font-size: 1.6rem;
+    color: #f39c12;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 4px;
+    align-items: center;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    text-decoration: none;
+    color: var(--text-alt);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    position: relative;
+    white-space: nowrap;
+    min-width: 44px;
+    justify-content: center;
+}
+
+/* Hide text by default */
+.nav-link .nav-text {
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    margin-left: 0;
+}
+
+/* Show text on hover OR when active */
+.nav-link:hover .nav-text,
+.nav-link.active .nav-text {
+    opacity: 1;
+    max-width: 200px;
+    margin-left: 8px;
+}
+
+/* Expand link padding on hover or active */
+.nav-link:hover,
+.nav-link.active {
+    padding: 10px 18px;
+    justify-content: flex-start;
+}
+
+/* Icon styling - ensure proper centering when text is hidden */
+.nav-link i {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    display: flex;
+    color: hsl(60 0% 80%);
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+}
+
+/* Hover states */
+.nav-link:hover {
+    color: var(--text-main);
+    background: var(--hover-bg);
+    transform: translateY(-1px);
+}
+
+.nav-link:hover i {
+    color: var(--text-main);
+}
+
+/* Active state styling */
+.nav-link.active {
+    color: var(--text-main);
+    background: var(--hover-bg);
+    font-weight: 600;
+}
+
+.nav-link.active i {
+    color: var(--text-main);
+}  
+
+/* Contact button styling */
+.nav-contact {
+    margin-left: 16px;
+}
+
+.nav-contact .nav-link {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+    min-width: auto;
+    justify-content: center;
+}
+
+.nav-contact .nav-link:hover {
+    background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+    color: white;
+}
+
+/* Contact button always shows text and doesn't expand */
+.nav-contact .nav-link {
+    padding: 10px 20px !important;
+    justify-content: center !important;
+}
+
+.nav-contact .nav-link .nav-text {
+    opacity: 1;
+    max-width: none;
+    margin-left: 0;
+}
+
+.nav-contact .nav-link i {
+    display: none; /* Hide icon in contact button */
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 22px;
+    height: 2px;
+    background: var(--text-alt);
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 1px;
+}

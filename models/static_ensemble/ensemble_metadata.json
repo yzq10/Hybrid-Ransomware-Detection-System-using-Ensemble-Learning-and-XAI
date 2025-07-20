@@ -1,0 +1,29 @@
+{
+  "models": [
+    "XGBoost",
+    "SVM",
+    "RandomForest"
+  ],
+  "feature_count": 125,
+  "training_date": "2025-07-16 19:42:51",
+  "random_state": 42,
+  "feature_breakdown": {
+    "pe_features": 25,
+    "api_features": 100,
+    "dll_features": 0
+  },
+  "model_info": {
+    "xgboost": {
+      "type": "XGBClassifier",
+      "preprocessing": "none"
+    },
+    "svm": {
+      "type": "SVC",
+      "preprocessing": "StandardScaler"
+    },
+    "randomforest": {
+      "type": "RandomForestClassifier",
+      "preprocessing": "none"
+    }
+  }
+}

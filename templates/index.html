@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Ransomware Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Regolapro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern-signature-styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-shield-alt"></i>
+                <span>Hybrid Ransomware Detection</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-section="detection">
+                        <i class="fas fa-search"></i>
+                        <span class="nav-text">Detection</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="signature">
+                        <i class="fas fa-fingerprint"></i>
+                        <span class="nav-text">Signature Validation</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="static">
+                        <i class="fas fa-file-code"></i>
+                        <span class="nav-text">Static Analysis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="dynamic">
+                        <i class="fas fa-play-circle"></i>
+                        <span class="nav-text">Dynamic Analysis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="history">
+                        <i class="fas fa-history"></i>
+                        <span class="nav-text">History</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Detection Section (Active) -->
+        <section id="detection-section" class="content-section active">
+            <!-- Header -->
+            <div class="container header">
+                <h1><i class="fas fa-shield-alt"></i> Hybrid Ransomware Detection System</h1>
+                <p class="text-muted">Advanced Windows file analysis using Static Analysis + Dynamic Behavioral Analysis with Ensemble ML + XAI Explanations</p>
+                <div class="pipeline-indicator">
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-fingerprint"></i></div>
+                        <span>Signature Validation</span>
+                        <small>VirusTotal Check</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-file-code"></i></div>
+                        <span>Static Analysis</span>
+                        <small>PE Header, API and DLLs</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-play-circle"></i></div>
+                        <span>Dynamic Analysis</span>
+                        <small>Cuckoo Sandbox</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-check-circle"></i></div>
+                        <span>Final Detection</span>
+                        <small>With Explanations</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upload Section -->
+            <div class="container">
+                <h2><i class="fas fa-upload"></i> Upload Files for Analysis</h2><br>
+                <div id="upload-area" class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p>Drag & drop files here or click to browse</p>
+                    <small>Allowed file types: .exe, .dll, .sys (Max 1GB)</small>
+                    <input type="file" id="file-input" style="display: none;" multiple>
+                </div>
+                
+                <div id="file-list-container" style="display: none;">
+                    <h3><i class="fas fa-list"></i> Selected Files</h3>
+                    <ul id="file-list" class="file-list"></ul>
+                    <div class="button-group">
+                        <button id="scan-button" class="btn-primary">
+                            <i class="fas fa-search"></i>
+                            Start Hybrid Analysis
+                        </button>
+                        <button id="clear-button" class="btn-secondary">
+                            <i class="fas fa-trash"></i>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="loading-content">
+                        <div class="spinner">
+                            <i class="fas fa-cog fa-spin"></i>
+                        </div>
+                        <div id="loading-text">Initializing analysis...</div>
+                        <div id="progress-bar" class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                        <div id="current-file" class="current-file"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Status & Real-time Detection Feed -->
+
+            <!-- Results Section -->
+            <div id="results-container" class="container" style="display: none;">
+                <h2><i class="fas fa-chart-line"></i> Analysis Results</h2><br>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-file"></i></div>
+                        <div class="stat-value" id="total-scanned">0</div>
+                        <div class="stat-label">Files Analyzed</div>
+                    </div>
+                    <div class="stat-item safe">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-value" id="safe-count">0</div>
+                        <div class="stat-label">Safe Files</div>
+                    </div>
+                    <div class="stat-item threat">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-value" id="threat-count">0</div>
+                        <div class="stat-label">Ransomware Detected</div>
+                    </div>
+                    <div class="stat-item dynamic">
+                        <div class="stat-icon"><i class="fas fa-brain"></i></div>
+                        <div class="stat-value" id="dynamic-analyzed">0</div>
+                        <div class="stat-label">Dynamic Analyzed</div>
+                    </div>
+                </div>
+                <div id="results-area" class="results-area"></div>
+            </div>
+        </section>
+
+        <!-- Signature Validation Section -->
+        <section id="signature-section" class="content-section">
+            <div class="container header">
+                <h1><i class="fas fa-fingerprint"></i> Signature Validation</h1>
+                <p>Quick hash-based threat intelligence lookup using VirusTotal's community database</p>
+                <div class="pipeline-indicator">
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-calculator"></i></div>
+                        <span>Hash Calculation</span>
+                        <small>SHA256</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-cloud"></i></div>
+                        <span>VirusTotal Query</span>
+                        <small>Community DB</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-chart-pie"></i></div>
+                        <span>Reputation Analysis</span>
+                        <small>Detection Ratios</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upload Section for Signature Validation -->
+            <div class="container">
+                <h2><i class="fas fa-upload"></i> Upload Files for Signature Validation</h2><br>
+                <div id="signature-upload-area" class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <p>Drag & drop files here or click to browse</p>
+                    <small>Quick VirusTotal hash lookup - Allowed file types: .exe, .dll, .sys (Max 1GB)</small>
+                    <input type="file" id="signature-file-input" style="display: none;" multiple>
+                </div>
+                
+                <div id="signature-file-list-container" style="display: none;">
+                    <h3><i class="fas fa-list"></i> Selected Files</h3>
+                    <ul id="signature-file-list" class="file-list"></ul>
+                    <div class="button-group">
+                        <button id="signature-scan-button" class="btn-primary">
+                            <i class="fas fa-fingerprint"></i>
+                            Start Signature Analysis
+                        </button>
+                        <button id="signature-clear-button" class="btn-secondary">
+                            <i class="fas fa-trash"></i>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="signature-loading" class="loading" style="display: none;">
+                    <div class="loading-content">
+                        <div class="spinner">
+                            <i class="fas fa-fingerprint fa-spin"></i>
+                        </div>
+                        <div id="signature-loading-text">Calculating hash...</div>
+                        <div id="signature-progress-bar" class="progress-bar">
+                            <div id="signature-progress-fill" class="progress-fill"></div>
+                        </div>
+                        <div id="signature-current-file" class="current-file"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Signature Results Section -->
+            <div id="signature-results-container" class="container" style="display: none;">
+                <h2><i class="fas fa-chart-line"></i> Signature Analysis Results</h2><br>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-file"></i></div>
+                        <div class="stat-value" id="signature-total-scanned">0</div>
+                        <div class="stat-label">Files Checked</div>
+                    </div>
+                    <div class="stat-item safe">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-value" id="signature-safe-count">0</div>
+                        <div class="stat-label">Clean Files</div>
+                    </div>
+                    <div class="stat-item threat">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-value" id="signature-threat-count">0</div>
+                        <div class="stat-label">Threats Found</div>
+                    </div>
+                    <div class="stat-item" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);">
+                        <div class="stat-icon" style="color: #ff9800;"><i class="fas fa-question-circle"></i></div>
+                        <div class="stat-value" id="signature-unknown-count">0</div>
+                        <div class="stat-label">Unknown Files</div>
+                    </div>
+                </div>
+                <div id="signature-results-area" class="results-area"></div>
+            </div>
+        </section>
+
+        <!-- Static Analysis Section -->
+        <section id="static-section" class="content-section">
+            <!-- Header -->
+            <div class="container header">
+                <h1><i class="fas fa-file-code"></i> Static Analysis Dashboard</h1>
+                <p>Ensemble machine learning models for Windows' File analysis with detailed insights</p>
+                <div class="pipeline-indicator">
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-tools"></i></div>
+                        <span>Feature Extraction</span>
+                        <small>PE Header, API and DLL</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-plus"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-brain"></i></div>
+                        <span>Ensemble ML</span>
+                        <small>XGBoost + SVM + RF</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-plus"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-lightbulb"></i></div>
+                        <span>XAI Explanation</span>
+                        <small>Feature Importance</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="container">
+                <h2><i class="fas fa-upload"></i> Upload Files for Static Analysis</h2><br>
+                <div id="static-upload-area" class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <p>Drag & drop files here or click to browse</p>
+                    <small>Static analysis with ensemble ML models - Allowed file types: .exe, .dll, .sys (Max 1GB)</small>
+                    <input type="file" id="static-file-input" style="display: none;" accept=".exe,.dll,.sys" multiple>
+                </div>
+                
+                <div id="static-file-list-container" style="display: none;">
+                    <h3><i class="fas fa-list"></i> Selected Files</h3>
+                    <ul id="static-file-list" class="file-list"></ul>
+                    <div class="button-group">
+                        <button id="static-scan-button" class="btn-primary">
+                            <i class="fas fa-file-code"></i>
+                            Start Static Analysis
+                        </button>
+                        <button id="static-clear-button" class="btn-secondary">
+                            <i class="fas fa-trash"></i>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="static-loading" class="loading" style="display: none;">
+                    <div class="loading-content">
+                        <div class="spinner">
+                            <i class="fas fa-cog fa-spin"></i>
+                        </div>
+                        <div id="static-loading-text">Analyzing files...</div>
+                        <div id="static-progress-bar" class="progress-bar">
+                            <div id="static-progress-fill" class="progress-fill"></div>
+                        </div>
+                        <div id="static-current-file" class="current-file"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="container" id="static-results-container" style="display: none;">
+                <h2><i class="fas fa-chart-line"></i> Static Analysis Results</h2><br>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-file"></i></div>
+                        <div class="stat-value" id="static-total-analyzed">0</div>
+                        <div class="stat-label">Files Analyzed</div>
+                    </div>
+                    <div class="stat-item safe">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-value" id="static-safe-count">0</div>
+                        <div class="stat-label">Benign Files</div>
+                    </div>
+                    <div class="stat-item threat">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-value" id="static-threat-count">0</div>
+                        <div class="stat-label">Ransomware Detected</div>
+                    </div>
+                    <div class="stat-item" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);">
+                        <div class="stat-icon" style="color: #ff9800;"><i class="fas fa-brain"></i></div>
+                        <div class="stat-value" id="static-ensemble-count">0</div>
+                        <div class="stat-label">Ensemble Analyzed</div>
+                    </div>
+                </div>
+                <div id="static-results-area" class="results-area"></div>
+            </div>
+        </section>
+
+        <!-- Replace the dynamic analysis section in your index.html with this -->
+        <section id="dynamic-section" class="content-section">
+            <div class="container header">
+                <h1><i class="fas fa-play-circle"></i> Dynamic Behavioral Analysis</h1>
+                <p>Advanced behavioral analysis using Cuckoo Sandbox + Ensemble ML Models with Explainable AI</p>
+                <div class="pipeline-indicator">
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-cube"></i></div>
+                        <span>Cuckoo Sandbox</span>
+                        <small>Behavioral Execution</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-brain"></i></div>
+                        <span>Ensemble ML</span>
+                        <small>SVM + RF + XGBoost</small>
+                    </div>
+                    <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="stage">
+                        <div class="stage-icon"><i class="fas fa-lightbulb"></i></div>
+                        <span>XAI Explanation</span>
+                        <small>Feature Importance</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Upload Section for Dynamic Analysis -->
+            <div class="container">
+                <h2><i class="fas fa-upload"></i> Upload Files for Dynamic Analysis</h2><br>
+                <div id="dynamic-upload-area" class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <p>Drag & drop files here or click to browse</p>
+                    <small>Deep behavioral analysis - Allowed file types: .exe, .dll, .sys (Max 1GB)<br>
+                    <strong>Note:</strong> Analysis takes 3-5 minutes per file</small>
+                    <input type="file" id="dynamic-file-input" style="display: none;" multiple>
+                </div>
+                
+                <div id="dynamic-file-list-container" style="display: none;">
+                    <h3><i class="fas fa-list"></i> Selected Files</h3>
+                    <ul id="dynamic-file-list" class="file-list"></ul>
+                    <div class="button-group">
+                        <button id="dynamic-scan-button" class="btn-primary">
+                            <i class="fas fa-play-circle"></i>
+                            Start Dynamic Analysis
+                        </button>
+                        <button id="dynamic-clear-button" class="btn-secondary">
+                            <i class="fas fa-trash"></i>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="dynamic-loading" class="loading" style="display: none;">
+                    <div class="loading-content">
+                        <div class="spinner">
+                            <i class="fas fa-cube fa-spin"></i>
+                        </div>
+                        <div id="dynamic-loading-text">Submitting to Cuckoo Sandbox...</div>
+                        <div id="dynamic-progress-bar" class="progress-bar">
+                            <div id="dynamic-progress-fill" class="progress-fill"></div>
+                        </div>
+                        <div id="dynamic-current-file" class="current-file"></div>
+                        <div id="dynamic-stage-info" style="margin-top: 1rem; padding: 1rem; background: #e3f2fd; border-radius: 8px; color: #1565c0;">
+                            <strong>Current Stage:</strong> <span id="dynamic-current-stage">Initializing...</span><br>
+                            <small id="dynamic-stage-description">Preparing file for analysis</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Status -->
+            <div id="dynamic-system-status" class="container">
+                <h2><i class="fas fa-server"></i> Dynamic Analysis System Status</h2><br>
+                <div id="dynamic-status-content">
+                    <div class="loading">
+                        <div class="spinner"><i class="fas fa-cog fa-spin"></i></div>
+                        <div>Checking system status...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Analysis Results -->
+            <div id="dynamic-results-container" class="container" style="display: none;">
+                <h2><i class="fas fa-chart-line"></i> Dynamic Analysis Results</h2><br>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-file"></i></div>
+                        <div class="stat-value" id="dynamic-total-analyzed">0</div>
+                        <div class="stat-label">Files Analyzed</div>
+                    </div>
+                    <div class="stat-item safe">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-value" id="dynamic-safe-count">0</div>
+                        <div class="stat-label">Benign Files</div>
+                    </div>
+                    <div class="stat-item threat">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-value" id="dynamic-threat-count">0</div>
+                        <div class="stat-label">Ransomware Detected</div>
+                    </div>
+                    <div class="stat-item" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);">
+                        <div class="stat-icon" style="color: #ff9800;"><i class="fas fa-brain"></i></div>
+                        <div class="stat-value" id="dynamic-ensemble-count">0</div>
+                        <div class="stat-label">Ensemble Analyzed</div>
+                    </div>
+                </div>
+                <div id="dynamic-results-area" class="results-area"></div>
+            </div>
+        </section>
+
+        <section id="history-section" class="content-section">
+            <div class="container">
+                <h1><i class="fas fa-history"></i> Analysis History</h1><br>
+                <div id="history-loading">Loading history...</div>
+                <div id="history-content" style="display: none;">
+                    <div id="history-stats"></div>
+                    <div id="history-table"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="{{ url_for('static', filename='js/core.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/signature.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/static.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/dynamic.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/history.js') }}"></script>
+</body>
+</html>

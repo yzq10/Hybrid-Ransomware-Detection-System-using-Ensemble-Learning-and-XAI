@@ -1,0 +1,105 @@
+/* Container System */
+.container {
+    max-width: 1200px;
+    margin: 0 auto 2rem auto;
+    background: var(--bg-container);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.header {
+    background: var(--bg-container);
+    color: var(--text-main);
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.header h1 i {
+    margin-right: 15px;
+    color: #f39c12;
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+/* Pipeline Indicator */
+.pipeline-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    /* background: rgba(255, 255, 255, 0.05); */
+    background: var(--text-alt);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 180px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    color: var(--bg-container);
+}
+
+.stage-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.stage span {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.stage small {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.arrow {
+    font-size: 1.5rem;
+    color: var(--text-alt);
+}
+
+/* Status Grid Layout */
+.status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .status-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* Status sections alignment fix */
+.status-grid .analysis-section {
+    margin: 0 0 1rem 0; /* Override the default margin: 2rem 0 */
+}
+
+.status-grid .status-section,
+.status-grid .detection-feed-section {
+    align-self: start; /* Ensure both sections start at the same vertical position */
+}

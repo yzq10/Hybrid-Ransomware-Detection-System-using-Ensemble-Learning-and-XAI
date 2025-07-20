@@ -1,0 +1,107 @@
+/* Analysis Results */
+.results-area {
+    margin-top: 1rem;
+}
+
+.analysis-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.analysis-section h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-main);
+}
+
+.analysis-section h4 i {
+    margin-right: 10px;
+    color: #1976d2;
+}
+
+.stage-status {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stage-completed {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.stage-skipped {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.stage-failed {
+    background-color: #ffcdd2;
+    color: #c62828;
+}
+
+.analysis-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-label {
+    font-weight: 500;
+    color: var(--text-alt);
+}
+
+.detail-value {
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.confidence-bar {
+    height: 15px;
+    background-color: #e3f2fd;
+    border-radius: 10px;
+    margin-top: 1rem;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.confidence-level {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Hash Display */
+.hash-display {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    margin: 1rem 0;
+}

@@ -1,0 +1,254 @@
+/* MODERN SIGNATURE ANALYSIS STYLE - MATCHES STATIC ANALYSIS */
+
+/* Override all signature section styling to match static analysis */
+.signature-section {
+    background: white !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+}
+
+.signature-section:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Match the section header style from static analysis */
+.signature-section h5 {
+    margin-bottom: 1rem !important;
+    font-size: 1.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+    letter-spacing: normal !important;
+}
+
+.signature-section h5 i {
+    margin-right: 10px !important;
+    color: #1976d2 !important;
+    font-size: 1.2rem !important;
+}
+
+/* Add status badge like static analysis */
+.signature-section h5::after {
+    content: "COMPLETED";
+    padding: 0.4rem 1rem !important;
+    border-radius: 20px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    background-color: #c8e6c9 !important;
+    color: #2e7d32 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+}
+
+.signature-section h5::before {
+    content: "\f00c" !important;
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    margin-right: 5px !important;
+}
+
+/* Hash display - clean and modern like static analysis */
+.hash-display {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Courier New', monospace !important;
+    background: white !important;
+    padding: 0.75rem !important;
+    border-radius: 8px !important;
+    border: 1px solid #e0e0e0 !important;
+    font-size: 0.85rem !important;
+    word-break: break-all !important;
+    margin: 1rem 0 !important;
+    transition: all 0.3s ease !important;
+    line-height: 1.4 !important;
+}
+
+.hash-display:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hash-display strong {
+    color: #666 !important;
+    font-weight: 500 !important;
+    margin-right: 10px !important;
+    font-size: 0.85rem !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+/* Analysis details grid - match static analysis exactly */
+.signature-section .analysis-details {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.signature-section .detail-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 0.75rem !important;
+    background: white !important;
+    border-radius: 8px !important;
+    border: 1px solid #e0e0e0 !important;
+    transition: all 0.3s ease !important;
+    min-height: auto !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.signature-section .detail-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transform: none !important;
+    border-color: #e0e0e0 !important;
+}
+
+.signature-section .detail-label {
+    font-weight: 500 !important;
+    color: #666 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.signature-section .detail-value {
+    font-weight: 600 !important;
+    color: #333 !important;
+    font-size: 1rem !important;
+    text-shadow: none !important;
+}
+
+/* Special styling for unknown decision */
+.signature-section .detail-value[style*="unknown"] {
+    color: #ff9800 !important;
+    font-weight: 600 !important;
+}
+
+/* Detection bar - clean modern style */
+.vt-detection-bar {
+    height: 15px !important;
+    background-color: #e3f2fd !important;
+    border-radius: 10px !important;
+    margin-top: 1rem !important;
+    overflow: hidden !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+}
+
+.vt-detection-level {
+    height: 100% !important;
+    border-radius: 10px !important;
+    transition: width 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.vt-detection-text {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+    z-index: 10 !important;
+    white-space: nowrap !important;
+}
+
+/* Statistics text */
+.signature-section small {
+    color: #666 !important;
+    font-size: 0.85rem !important;
+    margin-top: 0.5rem !important;
+    display: block !important;
+}
+
+/* Reason box - clean style like static analysis */
+.signature-section > div:last-child,
+.signature-section div[style*="background: #f8f9fa"],
+.signature-section div[style*="background:#f8f9fa"] {
+    background: white !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    padding: 0.75rem !important;
+    margin-top: 1rem !important;
+    box-shadow: none !important;
+    color: #333 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+.signature-section div:last-child strong,
+.signature-section div[style*="background: #f8f9fa"] strong,
+.signature-section div[style*="background:#f8f9fa"] strong {
+    color: #666 !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    text-shadow: none !important;
+}
+
+/* Remove all decorative elements */
+.signature-section::before {
+    display: none !important;
+}
+
+/* For unknown status - use orange but subtle */
+.result-unknown .signature-section .detail-value {
+    color: #ff9800 !important;
+    font-weight: 600 !important;
+}
+
+.result-unknown .result-badge {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%) !important;
+    box-shadow: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+    letter-spacing: normal !important;
+}
+
+/* Execution time styling */
+.signature-section .execution-time {
+    color: #666 !important;
+    font-size: 0.85rem !important;
+    margin-top: 0.5rem !important;
+    display: block !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .signature-section {
+        padding: 1rem !important;
+        margin: 1rem 0 !important;
+    }
+    
+    .hash-display {
+        padding: 0.5rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .signature-section h5 {
+        font-size: 1.1rem !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+    
+    .signature-section .analysis-details {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.signature-section h5::before {
+    display: none !important;
+}

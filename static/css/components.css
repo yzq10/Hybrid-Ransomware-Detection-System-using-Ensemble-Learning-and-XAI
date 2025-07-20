@@ -1,0 +1,204 @@
+/* Upload Area */
+.upload-area {
+    border: 2px dashed var(--text-alt);
+    border-radius: 15px;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-alt);
+}
+
+.upload-area:hover, .upload-area.dragover {
+    border-color: var(--text-main);
+    background: var(--hover-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: var(--text-alt);
+    margin-bottom: 1rem;
+}
+
+.upload-area p {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-alt);
+}
+
+.upload-area small {
+    color: var(--text-alt);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Buttons */
+button, .btn-primary, .btn-secondary {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary, button:not(.btn-secondary) {
+    /* background: linear-gradient(135deg, var(--hover-bg) 0%, var(--text-alt) 100%); */
+    /* color: var(--text-main); */
+    background: hsl(0, 0%, 4%);
+    color: hsl(0, 0%, 89%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover, button:not(.btn-secondary):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: var(--text-alt);
+    color: var(--bg-main);
+}
+
+.btn-secondary {
+    background: hsl(357, 44%, 32%);
+    color: hsl(0, 0%, 89%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+    background: hsl(185, 100%, 18%);
+    color: var(--bg-main);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* File List */
+.file-list {
+    list-style-type: none;
+    margin: 1rem 0;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: var(--bg-main);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.file-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    background: var(--hover-bg);
+}
+
+.file-name {
+    font-weight: 500;
+    color: var(--text-alt);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-details {
+    color: var(--text-alt);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.loading-bar {
+    position: relative;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* Fix class mismatch for static analysis results */
+/* .result-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    color: var(--text-alt) !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.result-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 1rem !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+}
+
+.result-header h3 {
+    margin: 0 !important;
+    color: var(--text-main) !important;
+    font-size: 1.2rem !important;
+}
+
+.result-badge {
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+
+.result-safe .result-badge {
+    background: #4caf50 !important;
+}
+
+.result-threat .result-badge {
+    background: #f44336 !important;
+}
+
+.result-body {
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+} */
