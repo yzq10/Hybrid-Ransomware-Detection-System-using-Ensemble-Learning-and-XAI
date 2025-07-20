@@ -492,4 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeNavigation();
 });
 
+window.determineActualPrediction = determineActualPrediction;
+
 console.log('✅ core.js loaded - Shared utilities ready');

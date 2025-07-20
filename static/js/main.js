@@ -525,11 +525,28 @@ function displayMainResult(fileName, result) {
     const resultCard = document.createElement('div');
     resultCard.className = 'result-card';
     
+    console.log('🔥 DEBUG: About to call determineActualPrediction with:', result);
     const actualPrediction = determineActualPrediction(result);
     const confidence = (result.confidence * 100).toFixed(1);
     const analysisMode = formatAnalysisMode(result.analysis_mode);
     const badgeClass = actualPrediction === 0 ? 'result-safe' : 'result-threat';
     const badgeIcon = actualPrediction === 0 ? 'fa-shield-alt' : 'fa-exclamation-triangle';
+    
+    console.log('🔥 DEBUG: About to generate signature section');
+    const signatureSection = generateSignatureAnalysisSection(result.signature_analysis);
+    console.log('🔥 DEBUG: Signature section generated successfully');
+    
+    console.log('🔥 DEBUG: About to generate static section');
+    const staticSection = generateStaticAnalysisSection(result.static_analysis);
+    console.log('🔥 DEBUG: Static section generated successfully');
+    
+    console.log('🔥 DEBUG: About to generate dynamic section');
+    const dynamicSection = generateDynamicAnalysisSection(result.dynamic_analysis);
+    console.log('🔥 DEBUG: Dynamic section generated successfully');
+    
+    console.log('🔥 DEBUG: About to generate final decision section');
+    const finalSection = generateFinalDecisionSection(result);
+    console.log('🔥 DEBUG: Final section generated successfully');
     
     resultCard.innerHTML = `
         <div class="result-header">
@@ -540,14 +557,21 @@ function displayMainResult(fileName, result) {
             </div>
         </div>
         <div class="result-body">
-            ${generateSignatureAnalysisSection(result.signature_analysis)}
-            ${generateStaticAnalysisSection(result.static_analysis)}
-            ${generateDynamicAnalysisSection(result.dynamic_analysis)}
-            ${generateFinalDecisionSection(result)}
+            ${signatureSection}
+            ${staticSection}
+            ${dynamicSection}
+            ${finalSection}
         </div>
     `;
     
-    mainResultsArea.appendChild(resultCard);
+    console.log('🔥 DEBUG: About to append to DOM');
+    const currentResultsArea = document.getElementById('results-area');
+    if (currentResultsArea) {
+        currentResultsArea.appendChild(resultCard);
+    } else {
+        console.error('No results-area found for appendChild');
+    }
+    console.log('🔥 DEBUG: Successfully appended to DOM');
 }
 
 /**
@@ -1121,5 +1145,10 @@ export {
     mainFilesToScan,
     mainScanResults
 };
+
+// Add these to make main's internal functions global
+window.generateSignatureAnalysisSection = generateSignatureAnalysisSection;
+window.generateDynamicAnalysisSection = generateDynamicAnalysisSection;
+window.generateFinalDecisionSection = generateFinalDecisionSection;
 
 console.log('✅ main.js loaded - Full 3-Stage Pipeline Ready');

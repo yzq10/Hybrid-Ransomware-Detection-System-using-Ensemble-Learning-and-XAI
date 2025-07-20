@@ -14,8 +14,8 @@
 }
 
 .history-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: var(--text-alt);
+    color: var(--bg-container);
 }
 
 .history-table th {
@@ -101,9 +101,15 @@
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+    0% { 
+        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); 
+    }
+    70% { 
+        box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); 
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); 
+    }
 }
 
 /* Action Button Styles */
@@ -185,4 +191,422 @@
     border-radius: 8px;
     font-size: 12px;
     overflow-x: auto;
+}
+
+/* ========================================
+   RESULT DETAILS - CLEAN VERSION
+   ======================================== */
+
+/* Result Details Header Styling */
+.result-details-header {
+    background: var(--bg-container);
+    margin: -2rem -2rem 2rem -2rem;
+    padding: 2rem;
+    border-radius: 15px 15px 0 0;
+    color: var(--text-alt);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background pattern */
+.result-details-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="7" cy="7" r="1"/><circle cx="27" cy="7" r="1"/><circle cx="47" cy="7" r="1"/><circle cx="7" cy="27" r="1"/><circle cx="27" cy="27" r="1"/><circle cx="47" cy="27" r="1"/><circle cx="7" cy="47" r="1"/><circle cx="27" cy="47" r="1"/><circle cx="47" cy="47" r="1"/></g></g></svg>');
+    opacity: 0.3;
+}
+
+.back-button-row {
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.back-button {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* CLEAN SINGLE-LINE HEADER */
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Left side - title only */
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+.page-title h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.5px;
+}
+
+.page-title i {
+    font-size: 2rem;
+    opacity: 0.9;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Right side - just filename, no label */
+.file-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    word-break: break-all;
+    max-width: 400px;
+    color: white;
+}
+
+.file-name:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Hide unused elements */
+.prediction-badge,
+.file-info,
+.file-name-label,
+.title-content {
+    display: none !important;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* METADATA GRID LAYOUT */
+.metadata-content-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+    padding: 0 0.5rem;
+}
+
+/* Enhanced Metadata Items with Better Spacing */
+.metadata-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+}
+
+.metadata-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.metadata-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.9rem;
+    margin-left: 0.75rem;
+    flex-shrink: 0;
+}
+
+.metadata-value {
+    font-family: 'Courier New', monospace;
+    color: #212529;
+    font-size: 0.9rem;
+    text-align: right;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    word-break: break-all;
+}
+
+/* File Hash Truncation Styles */
+.file-hash-truncated {
+    font-family: 'Courier New', monospace;
+    color: #212529;
+    font-size: 0.9rem;
+    text-align: right;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.file-hash-truncated:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin: -4px;
+}
+
+/* Tooltip for full hash on hover */
+.file-hash-truncated::after {
+    content: attr(data-full-hash);
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.file-hash-truncated:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Arrow for tooltip */
+.file-hash-truncated::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    right: 20px;
+    border: 5px solid transparent;
+    border-top-color: #333;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(-5px);
+}
+
+.file-hash-truncated:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Alternative expandable hash approach */
+.file-hash-expandable {
+    font-family: 'Courier New', monospace;
+    color: #212529;
+    font-size: 0.9rem;
+    text-align: right;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.file-hash-expandable.collapsed {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file-hash-expandable.expanded {
+    word-break: break-all;
+    white-space: normal;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 8px;
+    border-radius: 6px;
+    margin: -8px;
+}
+
+/* Click indicator for expandable hash */
+.file-hash-expandable.collapsed::after {
+    content: ' ...';
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* Metadata Card */
+.metadata-card {
+    order: 1;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.metadata-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.metadata-card h5 {
+    color: #495057;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.metadata-card h5 i {
+    color: #667eea;
+    font-size: 1.2rem;
+}
+
+/* Results Container */
+#detail-results-container {
+    order: 2;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#detail-results-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+#detail-results-container h5 {
+    color: #495057;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+#detail-results-container h5 i {
+    color: #667eea;
+    font-size: 1.2rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .result-details-header {
+        margin: -1rem -1rem 1rem -1rem;
+        padding: 1.5rem 1rem;
+    }
+    
+    .title-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    
+    .page-title h1 {
+        font-size: 2rem;
+    }
+    
+    .file-name {
+        font-size: 1rem;
+        padding: 0.75rem 1rem;
+        max-width: 100%;
+    }
+    
+    .metadata-content-grid {
+        grid-template-columns: 1fr !important;
+        padding: 0 0.25rem;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+    
+    .back-button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+    }
+    
+    .metadata-item {
+        padding: 0.75rem 1rem 0.75rem 1.25rem;
+    }
+    
+    .metadata-label {
+        margin-left: 0.5rem;
+    }
+    
+    .metadata-value,
+    .file-hash-truncated,
+    .file-hash-expandable {
+        margin-right: 0.5rem;
+    }
+    
+    .file-hash-truncated {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-details-header {
+        padding: 1rem;
+    }
+    
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+    
+    .file-name {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
 }

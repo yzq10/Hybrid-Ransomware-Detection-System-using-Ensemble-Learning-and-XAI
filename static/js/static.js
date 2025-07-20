@@ -1149,4 +1149,9 @@ export {
     staticAnalysisFile
 };
 
+// Add this after the existing window exports
+window.generateStaticAnalysisSection = generateStaticAnalysisSection;
+window.generateStaticEnsembleDetailsSection = generateStaticEnsembleDetailsSection;
+window.generateStaticXAIExplanationSection = generateStaticXAIExplanationSection;
+
 console.log('✅ static.js loaded - Static Analysis Module Ready');

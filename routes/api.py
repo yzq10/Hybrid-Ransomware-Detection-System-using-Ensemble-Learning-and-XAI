@@ -287,14 +287,14 @@ def scan_file():
                     'performed': False,
                     'status': 'skipped',
                     'reason': 'Signature analysis provided definitive benign result',
-                    'prediction': 0,  # Add this
-                    'prediction_label': 'Benign',  # Add this
-                    'confidence': float(signature_result['confidence']),  # Add this
+                    'prediction': 0,
+                    'prediction_label': 'Benign',
+                    'confidence': float(signature_result['confidence']),
                     'probabilities': {
                         'benign': float(signature_result['confidence']),
                         'ransomware': 1.0 - float(signature_result['confidence'])
                     },
-                    'ensemble_details': {},  # Empty object
+                    'ensemble_details': {},
                     'feature_count': 0,
                     'execution_time': 0.0
                 },
@@ -312,7 +312,7 @@ def scan_file():
                     'analysis_type': None,
                     'execution_time': 0.0
                 },
-                'final_prediction': 0,  # 0 = benign
+                'final_prediction': 0,
                 'final_label': 'Benign',
                 'prediction_label': 'Benign',
                 'confidence': float(signature_result['confidence']),
@@ -321,6 +321,16 @@ def scan_file():
                 'decision_stage': 'signature_analysis',
                 'decision_reason': signature_result['reason']
             }
+            
+            # ✅ STORE TO DATABASE BEFORE CLEANUP
+            file_hash = calculate_file_hash(file_path)
+            db.store_result(
+                filename=file.filename,
+                file_hash=file_hash,
+                source="manual",
+                prediction=0,
+                analysis_result=result
+            )
             
             cleanup_file(file_path)
             return jsonify(result)
@@ -347,14 +357,14 @@ def scan_file():
                     'performed': False,
                     'status': 'skipped',
                     'reason': 'Signature analysis detected ransomware',
-                    'prediction': 1,  # Add this
-                    'prediction_label': 'Ransomware',  # Add this
-                    'confidence': float(signature_result['confidence']),  # Add this
+                    'prediction': 1,
+                    'prediction_label': 'Ransomware',
+                    'confidence': float(signature_result['confidence']),
                     'probabilities': {
                         'benign': 1.0 - float(signature_result['confidence']),
                         'ransomware': float(signature_result['confidence'])
                     },
-                    'ensemble_details': {},  # Empty object
+                    'ensemble_details': {},
                     'feature_count': 0,
                     'execution_time': 0.0
                 },
@@ -372,7 +382,7 @@ def scan_file():
                     'analysis_type': None,
                     'execution_time': 0.0
                 },
-                'final_prediction': 1,  # 1 = ransomware
+                'final_prediction': 1,
                 'final_label': 'Ransomware',
                 'prediction_label': 'Ransomware',
                 'confidence': float(signature_result['confidence']),
@@ -381,6 +391,16 @@ def scan_file():
                 'decision_stage': 'signature_analysis',
                 'decision_reason': signature_result['reason']
             }
+            
+            # ✅ STORE TO DATABASE BEFORE CLEANUP
+            file_hash = calculate_file_hash(file_path)
+            db.store_result(
+                filename=file.filename,
+                file_hash=file_hash,
+                source="manual",
+                prediction=1,
+                analysis_result=result
+            )
             
             cleanup_file(file_path)
             return jsonify(result)
@@ -434,11 +454,81 @@ def scan_file():
         if static_prediction == 1:
             # Static detected ransomware - skip dynamic
             dynamic_reason = "Static analysis detected ransomware - dynamic analysis not needed"
-        elif static_confidence < 0.7:  # Low confidence threshold
+            
+            # ✅ CREATE STATIC-ONLY RANSOMWARE RESULT AND STORE TO DATABASE
+            result = {
+                'status': 'success',
+                'filename': file.filename,
+                'signature_analysis': {
+                    'performed': True,
+                    'decision': signature_result['decision'],
+                    'confidence': float(signature_result['confidence']),
+                    'reason': signature_result['reason'],
+                    'action': signature_result['action'],
+                    'stage': signature_result['stage'],
+                    'file_hash': signature_result.get('file_hash', ''),
+                    'ratios': signature_result.get('ratios', {}),
+                    'security_mode': signature_result.get('security_mode', 'BALANCED'),
+                    'execution_time': signature_analysis_time
+                },
+                'static_analysis': {
+                    'performed': True,
+                    'prediction': int(static_prediction),
+                    'prediction_label': 'Ransomware',
+                    'confidence': float(static_confidence),
+                    'probabilities': {
+                        'benign': float(static_probabilities.get('benign', 0.5)),
+                        'ransomware': float(static_probabilities.get('ransomware', 0.5))
+                    },
+                    'ensemble_details': static_result.get('ensemble_details', {}),
+                    'explanation': static_result.get('explanation', {'available': False, 'reason': 'XAI data not found'}),
+                    'feature_count': len(features),
+                    'execution_time': static_analysis_time,
+                    'status': 'completed'
+                },
+                'dynamic_analysis': {
+                    'performed': False,
+                    'status': 'skipped',
+                    'reason': dynamic_reason,
+                    'prediction': None,
+                    'prediction_label': None,
+                    'confidence': None,
+                    'probabilities': {
+                        'benign': None,
+                        'ransomware': None
+                    },
+                    'analysis_type': None,
+                    'execution_time': 0.0
+                },
+                'final_prediction': 1,
+                'final_label': 'Ransomware',
+                'prediction_label': 'Ransomware',
+                'confidence': float(static_confidence),
+                'analysis_mode': 'signature_static',
+                'total_execution_time': time.time() - start_time,
+                'decision_stage': 'static_analysis',
+                'decision_reason': 'Static analysis detected ransomware with high confidence'
+            }
+            
+            # ✅ STORE TO DATABASE BEFORE CLEANUP
+            file_hash = calculate_file_hash(file_path)
+            db.store_result(
+                filename=file.filename,
+                file_hash=file_hash,
+                source="manual",
+                prediction=1,
+                analysis_result=result
+            )
+            
+            cleanup_file(file_path)
+            return jsonify(result)
+            
+        elif static_confidence < 0.7:
+            # Low confidence threshold
             need_dynamic = True
             dynamic_reason = "Static analysis inconclusive - proceeding to dynamic analysis"
         else:
-            # High confidence benign
+            # High confidence benign - continue to dynamic if available
             dynamic_reason = "Static analysis provided high-confidence benign result"
 
         # Initialize dynamic analysis structure (always present)
@@ -508,7 +598,7 @@ def scan_file():
                             'individual_models': dynamic_result.get('individual_models', {}),
                             'voting_result': dynamic_result.get('voting_result', {}),
                             'analysis_type': 'ensemble' if dynamic_result.get('individual_models') else 'single_model'
-                        }  # ADD THIS LINE
+                        }
                     })
                     
                     # Use dynamic result as final decision
@@ -597,12 +687,8 @@ def scan_file():
             'decision_reason': f'Final decision made by {decision_stage.replace("_", " ")}'
         }
         
-        # Clean up the file
-        cleanup_file(file_path)
-        
-        # Store result in database
-        file_hash = calculate_file_hash(file_path) if 'file_path' in locals() else None
-
+        # ✅ STORE TO DATABASE BEFORE CLEANUP (for full pipeline results)
+        file_hash = calculate_file_hash(file_path)
         db.store_result(
             filename=file.filename,
             file_hash=file_hash,
@@ -610,6 +696,9 @@ def scan_file():
             prediction=result.get('final_prediction', 0),
             analysis_result=result
         )
+        
+        # Clean up the file
+        cleanup_file(file_path)
 
         return jsonify(result)
         
@@ -976,10 +1065,11 @@ def get_database_info():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
-@api_bp.route('/result/<int:result_id>', methods=['GET'])
+@api_bp.route('/result-details/<int:result_id>')
 def get_result_details(result_id):
-    """Get detailed result by ID"""
-    result = db.get_result_by_id(result_id)
-    if result:
-        return jsonify(result)
-    return jsonify({'error': 'Result not found'}), 404
+    result_data = db.get_result_by_id(result_id)
+    if not result_data:
+        return jsonify({'error': 'Result not found'}), 404
+    return jsonify(result_data)
+
+# Add this route to your Flask app (likely in api.py or main app file)

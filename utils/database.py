@@ -97,7 +97,8 @@ class DetectionDatabase:
         with self.lock:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.execute('''
-                SELECT * FROM detections WHERE id = ?
+                SELECT id, timestamp, filename, file_hash, source, prediction, analysis_result
+                FROM detections WHERE id = ?
             ''', (result_id,))
             row = cursor.fetchone()
             conn.close()
@@ -105,12 +106,13 @@ class DetectionDatabase:
             if row:
                 return {
                     'id': row[0],
+                    'result_id': row[0],  # Add this for frontend compatibility
                     'timestamp': row[1],
                     'filename': row[2],
-                    'file_hash': row[4],
-                    'source': row[5],
-                    'prediction': row[6],
-                    'analysis_result': json.loads(row[7])
+                    'file_hash': row[3],
+                    'source': row[4],
+                    'prediction': row[5],
+                    'analysis_result': json.loads(row[6])  # Changed from row[7] to row[6]
                 }
             return None
 

@@ -1,0 +1,53 @@
+{
+  "file_info": {
+    "name": "OfficeSetup.exe",
+    "path": "OfficeSetup.exe",
+    "size": 8182920,
+    "analyzed_at": "2025-06-25T16:56:50.329165"
+  },
+  "validation": {
+    "is_valid": true,
+    "errors": [],
+    "warnings": [],
+    "file_info": {
+      "path": "OfficeSetup.exe",
+      "name": "OfficeSetup.exe",
+      "size": 8182920,
+      "extension": ".exe"
+    }
+  },
+  "static_analysis": {
+    "status": "success",
+    "performed": true,
+    "prediction": 0,
+    "prediction_label": "Benign",
+    "confidence": 0.5324498556998557,
+    "probabilities": {
+      "benign": 0.5324498556998557,
+      "ransomware": 0.46755014430014424
+    },
+    "execution_time": 1.5419244766235352
+  },
+  "dynamic_analysis": {
+    "status": "cuckoo_failed",
+    "error": "Analysis timed out after 180 seconds",
+    "performed": false,
+    "cuckoo_analysis": {
+      "status": "failed",
+      "error": "Analysis timed out after 180 seconds"
+    }
+  },
+  "final_prediction": {
+    "prediction": 0,
+    "prediction_label": "Benign",
+    "confidence": 0.5324498556998557,
+    "decision_stage": "static",
+    "reasoning": "Static analysis only (dynamic unavailable or skipped)"
+  },
+  "timing": {
+    "total_time": 182.31903433799744,
+    "static_time": 1.5419244766235352,
+    "dynamic_time": 0
+  },
+  "status": "completed"
+}

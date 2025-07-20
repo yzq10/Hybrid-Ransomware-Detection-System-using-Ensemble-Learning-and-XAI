@@ -381,7 +381,7 @@ function displaySignatureResult(fileName, result) {
 function generateDetectionStatsSection(result) {
     console.log('🔍 DEBUG: generateDetectionStatsSection called with:', result);
     
-    if (!result.ratios) {
+    if (!result.ratios || Object.keys(result.ratios).length === 0) {
         console.log('❌ DEBUG: No ratios found in result');
         return `
             <div style="margin-top: 1rem;">
@@ -596,5 +596,10 @@ export {
     signatureScanResults,
     generateDetectionStatsSection
 };
+
+window.displaySignatureResult = displaySignatureResult;
+// Add this after the existing exports section
+window.displaySignatureResult = displaySignatureResult;
+window.generateDetectionStatsSection = generateDetectionStatsSection;
 
 console.log('✅ signature.js loaded - Signature Analysis Module Ready');

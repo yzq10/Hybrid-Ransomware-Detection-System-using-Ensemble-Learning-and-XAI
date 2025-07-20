@@ -1335,4 +1335,9 @@ export {
     dynamicTestFile
 };
 
+// Add this after the existing window exports
+window.displayDynamicAnalysisResult = displayDynamicAnalysisResult;
+window.generateDynamicEnsembleDetailsSection = generateDynamicEnsembleDetailsSection;
+window.generateDynamicXAIExplanationSection = generateDynamicXAIExplanationSection;
+
 console.log('✅ dynamic.js (FIXED) loaded - Dynamic Analysis Module Ready');

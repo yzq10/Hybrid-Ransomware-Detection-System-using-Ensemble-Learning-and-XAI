@@ -487,6 +487,60 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Replace your result-details-section with this clean version -->
+        <section id="result-details-section" class="content-section" style="display: none;">
+            <div class="container">
+                <!-- Clean Header Layout -->
+                <div class="result-details-header">
+                    <!-- Back Button Row -->
+                    <div class="back-button-row">
+                        <button id="back-to-history-btn" class="back-button">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back to History</span>
+                        </button>
+                    </div>
+
+                    <!-- Single Line: Title Left, Filename Right -->
+                    <div class="title-row">
+                        <!-- Left: Just Title -->
+                        <div class="page-title">
+                            <i class="fas fa-file-alt"></i>
+                            <h1>Analysis Details</h1>
+                        </div>
+
+                        <!-- Right: Just Filename -->
+                        <div class="file-name" id="detail-filename">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="content-grid">
+                    <!-- Metadata Card -->
+                    <div class="metadata-card">
+                        <h5>
+                            <i class="fas fa-info-circle"></i>
+                            Analysis Metadata
+                        </h5>
+                        
+                        <div id="metadata-content" class="metadata-content-grid">
+                            <!-- Metadata will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Analysis Results Container -->
+                    <div id="detail-results-container" class="results-container">
+                        <h5>
+                            <i class="fas fa-chart-line"></i>
+                            Detailed Analysis Results
+                        </h5>
+                        <div id="detail-results-area">
+                            <!-- Results will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script type="module" src="{{ url_for('static', filename='js/core.js') }}"></script>
