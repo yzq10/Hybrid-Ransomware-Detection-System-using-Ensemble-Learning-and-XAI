@@ -407,11 +407,36 @@ function generateDetectionStatsSection(result) {
     
     console.log('📈 DEBUG: Calculated values:', { malwareRatio, coverageRatio, cleanRatio });
     
-    // Determine bar color and width
+    // FIXED: Always show the dominant result, not just malware
     const malwarePercent = parseFloat(malwareRatio);
-    const barColor = malwarePercent > 10 ? '#f44336' : malwarePercent > 0 ? '#ff9800' : '#4caf50';
-    const barWidth = malwarePercent > 0 ? malwarePercent : 100; // Show full green if no malware
-    const displayText = malwarePercent > 0 ? `${malwareRatio}% detected as malware` : `${cleanRatio}% clean`;
+    const cleanPercent = parseFloat(cleanRatio);
+    
+    // Determine what to display based on the actual decision
+    let barColor, barWidth, displayText;
+    
+    if (result.decision === 'malicious') {
+        // For malicious files, show the malware percentage
+        barColor = '#f44336'; // Red
+        barWidth = malwarePercent;
+        displayText = `${malwareRatio}% detected as malware`;
+    } else if (result.decision === 'benign') {
+        // For benign files, show the clean percentage
+        barColor = '#4caf50'; // Green
+        barWidth = cleanPercent;
+        displayText = `${cleanRatio}% clean`;
+    } else {
+        // For unknown files, show neutral
+        barColor = '#ff9800'; // Orange
+        barWidth = 50;
+        displayText = 'Unknown status';
+    }
+    
+    console.log('🎨 DEBUG: Bar display values:', { 
+        decision: result.decision, 
+        barColor, 
+        barWidth, 
+        displayText 
+    });
     
     return `
         <div style="margin-top: 1rem;">
@@ -422,6 +447,9 @@ function generateDetectionStatsSection(result) {
                     ${displayText}
                 </div>
             </div>
+            <small style="color: #666; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+                Coverage: ${coverageRatio}% | Clean: ${cleanRatio}% | Malware: ${malwareRatio}%
+            </small>
         </div>
     `;
 }

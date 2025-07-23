@@ -201,7 +201,8 @@ def evaluate_virustotal_logic(vt_stats: Dict) -> Dict:
     
     # Apply direct majority rule
     if threat_count > clean_count:
-        confidence = min(0.95, 0.5 + (threat_count / total_meaningful) if total_meaningful > 0 else 0.5)
+        # FIXED: Remove artificial 0.95 cap for more accurate confidence
+        confidence = 0.5 + (threat_count / total_meaningful) if total_meaningful > 0 else 0.5
         return {
             'decision': 'malicious',
             'confidence': confidence,
@@ -226,7 +227,8 @@ def evaluate_virustotal_logic(vt_stats: Dict) -> Dict:
             }
         }
     else:
-        confidence = min(0.95, (clean_count / total_meaningful) if total_meaningful > 0 else 0.5)
+        # FIXED: Remove artificial 0.95 cap for more accurate confidence
+        confidence = (clean_count / total_meaningful) if total_meaningful > 0 else 0.5
         return {
             'decision': 'benign',
             'confidence': confidence,

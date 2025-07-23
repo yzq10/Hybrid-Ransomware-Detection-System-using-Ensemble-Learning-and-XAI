@@ -114,35 +114,12 @@ class RansomwareFileHandler(FileSystemEventHandler):
             signature_result = self.perform_signature_analysis(str(file_path))
             
             # ========================================
-            # RESPECT SIGNATURE DECISION LOGIC
+            # RESPECT SIGNATURE DECISION LOGIC - ONLY STOP FOR RANSOMWARE
             # ========================================
             
             signature_action = signature_result.get('action', 'proceed_to_static')
             
-            if signature_action == 'final_verdict_benign':
-                logger.info("✅ Signature analysis: BENIGN verdict - stopping pipeline")
-                
-                result = {
-                    'filename': Path(file_path).name,
-                    'signature_analysis': signature_result,
-                    'static_analysis': {
-                        'performed': False,
-                        'status': 'skipped',
-                        'reason': 'Signature analysis returned benign verdict'
-                    },
-                    'dynamic_analysis': {
-                        'performed': False,
-                        'status': 'skipped', 
-                        'reason': 'Signature analysis returned benign verdict'
-                    },
-                    'final_prediction': 0,  # Benign
-                    'decision_stage': 'signature_analysis',
-                    'total_execution_time': 0.0
-                }
-                
-                return result
-                
-            elif signature_action == 'final_verdict_ransomware':
+            if signature_action == 'final_verdict_ransomware':
                 logger.info("🚨 Signature analysis: RANSOMWARE verdict - stopping pipeline")
                 
                 result = {
@@ -165,8 +142,9 @@ class RansomwareFileHandler(FileSystemEventHandler):
                 
                 return result
             
-            # If we reach here, signature returned 'proceed_to_static'
-            logger.info("🔄 Signature analysis: UNKNOWN - proceeding to static analysis")
+            else:
+                # Continue to static analysis for BOTH 'benign' and 'unknown' decisions
+                logger.info(f"🔄 Signature analysis: {signature_result.get('decision', 'UNKNOWN')} - proceeding to static analysis")
             
             # Stage 2: Static Analysis
             logger.info("Stage 2: Static Analysis")

@@ -255,87 +255,16 @@ def scan_file():
         # ========================================
         # STAGE 1: SIGNATURE ANALYSIS (VirusTotal)
         # ========================================
-        
+
         logger.info("STAGE 1: Starting signature analysis...")
         from utils.virustotal_check import analyze_file_signature
-        
+
         signature_start = time.time()
         signature_result = analyze_file_signature(file_path, current_app.config.get('VT_SECURITY_MODE', 'BALANCED'))
         signature_analysis_time = time.time() - signature_start
-        
-        # Handle signature analysis results with PROPER NULL/EMPTY OBJECTS
-        if signature_result['action'] == 'final_verdict_benign':
-            logger.info(f"Signature analysis: {signature_result['decision']} - {signature_result['action']}")
-            
-            # FIXED: Proper result structure for signature-only benign result
-            result = {
-                'status': 'success',
-                'filename': file.filename,
-                'signature_analysis': {
-                    'performed': True,
-                    'decision': signature_result['decision'],
-                    'confidence': float(signature_result['confidence']),
-                    'reason': signature_result['reason'],
-                    'action': signature_result['action'],
-                    'stage': signature_result['stage'],
-                    'file_hash': signature_result.get('file_hash', ''),
-                    'ratios': signature_result.get('ratios', {}),
-                    'security_mode': signature_result.get('security_mode', 'BALANCED'),
-                    'execution_time': signature_analysis_time
-                },
-                'static_analysis': {
-                    'performed': False,
-                    'status': 'skipped',
-                    'reason': 'Signature analysis provided definitive benign result',
-                    'prediction': 0,
-                    'prediction_label': 'Benign',
-                    'confidence': float(signature_result['confidence']),
-                    'probabilities': {
-                        'benign': float(signature_result['confidence']),
-                        'ransomware': 1.0 - float(signature_result['confidence'])
-                    },
-                    'ensemble_details': {},
-                    'feature_count': 0,
-                    'execution_time': 0.0
-                },
-                'dynamic_analysis': {
-                    'performed': False,
-                    'status': 'skipped',
-                    'reason': 'Signature analysis provided definitive benign result',
-                    'prediction': None,
-                    'prediction_label': None,
-                    'confidence': None,
-                    'probabilities': {
-                        'benign': None,
-                        'ransomware': None
-                    },
-                    'analysis_type': None,
-                    'execution_time': 0.0
-                },
-                'final_prediction': 0,
-                'final_label': 'Benign',
-                'prediction_label': 'Benign',
-                'confidence': float(signature_result['confidence']),
-                'analysis_mode': 'signature_only',
-                'total_execution_time': time.time() - start_time,
-                'decision_stage': 'signature_analysis',
-                'decision_reason': signature_result['reason']
-            }
-            
-            # ✅ STORE TO DATABASE BEFORE CLEANUP
-            file_hash = calculate_file_hash(file_path)
-            db.store_result(
-                filename=file.filename,
-                file_hash=file_hash,
-                source="manual",
-                prediction=0,
-                analysis_result=result
-            )
-            
-            cleanup_file(file_path)
-            return jsonify(result)
-            
-        elif signature_result['action'] == 'final_verdict_ransomware':
+
+        # Handle signature analysis results - ONLY STOP IF RANSOMWARE DETECTED
+        if signature_result['action'] == 'final_verdict_ransomware':
             
             # FIXED: Proper result structure for signature-only ransomware result
             result = {
@@ -404,9 +333,9 @@ def scan_file():
             
             cleanup_file(file_path)
             return jsonify(result)
-        
+
         else:
-            # Continue to static analysis (proceed_to_static, insufficient_data, etc.)
+            # Continue to static analysis for BOTH 'benign' and 'unknown' decisions
             logger.info(f"Signature analysis: {signature_result['decision']} - proceeding to static analysis")
 
         # ========================================
