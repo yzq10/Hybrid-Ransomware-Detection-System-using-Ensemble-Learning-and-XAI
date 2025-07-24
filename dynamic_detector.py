@@ -216,7 +216,8 @@ class DynamicDetector:
 def load_dynamic_detector(models_dir: str = "models/dynamic_ensemble", 
                         #   feature_mapping_file: str = "models/final_selected_feature_mapping.json") -> DynamicDetector:
                          feature_mapping_file: str = "models/RFE_selected_feature_names_dic.json") -> DynamicDetector:
+                        # feature_mapping_file: str = "models/MLRan_combined_no_strings_feature_mapping.json") -> DynamicDetector:
     """Load and return ready-to-use detector"""
     detector = DynamicDetector()
     detector.load_models(models_dir, feature_mapping_file)
-    return detector
+    return detector 

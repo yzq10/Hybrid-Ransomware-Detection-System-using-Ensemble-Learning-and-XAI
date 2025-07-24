@@ -17,7 +17,8 @@ export const API_ENDPOINTS = {
     SIGNATURE_TEST: `${API_BASE_URL}/api/signature-test`,
     STATIC_ANALYSIS: `${API_BASE_URL}/api/static-analysis`,  // Updated from /static-only
     DYNAMIC_ANALYSIS: `${API_BASE_URL}/api/dynamic-analysis`,
-    CUCKOO_STATUS: `${API_BASE_URL}/api/cuckoo-status`
+    CUCKOO_STATUS: `${API_BASE_URL}/api/cuckoo-status`,
+    RECENT_RESULTS: `${API_BASE_URL}/api/recent-results`
 };
 
 // ========================================

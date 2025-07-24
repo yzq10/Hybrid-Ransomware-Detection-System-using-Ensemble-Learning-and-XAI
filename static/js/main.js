@@ -823,7 +823,7 @@ function generateFinalDecisionSection(result) {
 // STATUS SECTIONS FOR MAIN.JS
 // ========================================
 
-function initMainStatusSections() {
+async function initMainStatusSections() {
     const detectionSection = document.querySelector('#detection-section') || document.body;
     
     // Remove existing status containers if they exist
@@ -876,100 +876,141 @@ function initMainStatusSections() {
 }
 
 /**
- * Display system status sections in left column
+ * Display system status sections in left column - MODIFIED to use real API data
  */
-function displaySystemStatusSections(leftContainer) {
+async function displaySystemStatusSections(leftContainer) {
+    // Show loading state first
     leftContainer.innerHTML = `
         <h2 style="margin: 0 0 1rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
             <i class="fas fa-server"></i> System Status
         </h2>
-        
-        <!-- Static Analysis Status -->
-        <div class="analysis-section" style="margin: 0 0 1.5rem 0; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
-            <h4 style="margin: 0 0 1rem 0; display: flex; align-items: center; justify-content: space-between; color: var(--text-main);">
-                <span><i class="fas fa-file-code" style="margin-right: 10px; color: #1976d2;"></i> Static Analysis</span>
-                <span class="stage-status stage-completed">
-                    <i class="fas fa-check-circle"></i> MODELS READY
-                </span>
-            </h4>
-            <div style="display: grid; gap: 0.75rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-tree" style="margin-right: 8px;"></i> Random Forest</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-vector-square" style="margin-right: 8px;"></i> SVM</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-rocket" style="margin-right: 8px;"></i> XGBoost</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-lightbulb" style="margin-right: 8px;"></i> Static XAI</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dynamic Analysis Status -->
-        <div class="analysis-section" style="margin: 0; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
-            <h4 style="margin: 0 0 1rem 0; display: flex; align-items: center; justify-content: space-between; color: var(--text-main);">
-                <span><i class="fas fa-play-circle" style="margin-right: 10px; color: #1976d2;"></i> Dynamic Analysis</span>
-                <span class="stage-status stage-skipped">
-                    <i class="fas fa-exclamation-triangle"></i> SANDBOX NOT READY
-                </span>
-            </h4>
-            <div style="display: grid; gap: 0.75rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-tree" style="margin-right: 8px;"></i> Random Forest</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-vector-square" style="margin-right: 8px;"></i> SVM</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-rocket" style="margin-right: 8px;"></i> XGBoost</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #28a745;">
-                    <span><i class="fas fa-lightbulb" style="margin-right: 8px;"></i> Dynamic XAI</span>
-                    <span style="color: #4caf50; font-weight: 600;">
-                        <i class="fas fa-check-circle"></i> Ready
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid #f44336;">
-                    <span><i class="fas fa-cube" style="margin-right: 8px;"></i> Cuckoo Sandbox</span>
-                    <span style="color: #f44336; font-weight: 600;">
-                        <i class="fas fa-times-circle"></i> Disconnected
-                    </span>
-                </div>
-            </div>
+        <div class="loading" style="text-align: center; padding: 2rem;">
+            <div class="spinner"><i class="fas fa-cog fa-spin"></i></div>
+            <div>Loading system status...</div>
         </div>
     `;
+    
+    try {
+        // Fetch real API data
+        const response = await makeApiRequest(API_ENDPOINTS.MODEL_INFO);
+        
+        if (response.success && response.data.status === 'success') {
+            const statusData = response.data;
+            const staticModel = statusData.static_model || {};
+            const dynamicModel = statusData.dynamic_model || {};
+            const cuckooStatus = statusData.cuckoo_status || { status: 'unknown' };
+            
+            const staticReady = staticModel.loaded || false;
+            const dynamicReady = dynamicModel.loaded || false;
+            const cuckooReady = cuckooStatus.status === 'connected';
+            
+            // Display real status data with same layout
+            leftContainer.innerHTML = `
+                <h2 style="margin: 0 0 1rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-server"></i> System Status
+                </h2>
+                
+                <!-- Static Analysis Status -->
+                <div class="analysis-section" style="margin: 0 0 1.5rem 0; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
+                    <h4 style="margin: 0 0 1rem 0; display: flex; align-items: center; justify-content: space-between; color: var(--text-main);">
+                        <span><i class="fas fa-file-code" style="margin-right: 10px; color: #1976d2;"></i> Static Analysis</span>
+                        <span class="stage-status ${staticReady ? 'stage-completed' : 'stage-skipped'}">
+                            <i class="fas ${staticReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${staticReady ? 'MODELS READY' : 'MODELS NOT READY'}
+                        </span>
+                    </h4>
+                    <div style="display: grid; gap: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${staticReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-tree" style="margin-right: 8px;"></i> Random Forest</span>
+                            <span style="color: ${staticReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${staticReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${staticReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${staticReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-vector-square" style="margin-right: 8px;"></i> SVM</span>
+                            <span style="color: ${staticReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${staticReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${staticReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${staticReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-rocket" style="margin-right: 8px;"></i> XGBoost</span>
+                            <span style="color: ${staticReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${staticReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${staticReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${staticReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-lightbulb" style="margin-right: 8px;"></i> Static XAI</span>
+                            <span style="color: ${staticReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${staticReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${staticReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Analysis Status -->
+                <div class="analysis-section" style="margin: 0; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);">
+                    <h4 style="margin: 0 0 1rem 0; display: flex; align-items: center; justify-content: space-between; color: var(--text-main);">
+                        <span><i class="fas fa-play-circle" style="margin-right: 10px; color: #1976d2;"></i> Dynamic Analysis</span>
+                        <span class="stage-status ${dynamicReady && cuckooReady ? 'stage-completed' : 'stage-skipped'}">
+                            <i class="fas ${dynamicReady && cuckooReady ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i> ${dynamicReady && cuckooReady ? 'SYSTEM READY' : 'SANDBOX NOT READY'}
+                        </span>
+                    </h4>
+                    <div style="display: grid; gap: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${dynamicReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-tree" style="margin-right: 8px;"></i> Random Forest</span>
+                            <span style="color: ${dynamicReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${dynamicReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${dynamicReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${dynamicReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-vector-square" style="margin-right: 8px;"></i> SVM</span>
+                            <span style="color: ${dynamicReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${dynamicReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${dynamicReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${dynamicReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-rocket" style="margin-right: 8px;"></i> XGBoost</span>
+                            <span style="color: ${dynamicReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${dynamicReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${dynamicReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${dynamicReady ? '#28a745' : '#dc3545'};">
+                            <span><i class="fas fa-lightbulb" style="margin-right: 8px;"></i> Dynamic XAI</span>
+                            <span style="color: ${dynamicReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${dynamicReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${dynamicReady ? 'Ready' : 'Not Ready'}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 6px; border-left: 4px solid ${cuckooReady ? '#28a745' : '#f44336'};">
+                            <span><i class="fas fa-cube" style="margin-right: 8px;"></i> Cuckoo Sandbox</span>
+                            <span style="color: ${cuckooReady ? '#4caf50' : '#f44336'}; font-weight: 600;">
+                                <i class="fas ${cuckooReady ? 'fa-check-circle' : 'fa-times-circle'}"></i> ${cuckooReady ? 'Connected' : 'Disconnected'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            throw new Error(response.error || 'Failed to get system status');
+        }
+        
+    } catch (error) {
+        console.error('System status error:', error);
+        leftContainer.innerHTML = `
+            <h2 style="margin: 0 0 1rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-server"></i> System Status
+            </h2>
+            <div style="color: #c62828; padding: 1rem; background: #ffcdd2; border-radius: 8px;">
+                <strong><i class="fas fa-wifi"></i> Connection Error:</strong> Cannot connect to analysis API<br>
+                <small>Make sure the server is running</small>
+            </div>
+        `;
+    }
 }
 
 /**
- * Display detection feed section in right column
+ * Display detection feed section in right column - MODIFIED to use real API data
  */
-function displayDetectionFeedSection(rightContainer) {
-    const detections = getRecentDetections();
-    
+async function displayDetectionFeedSection(rightContainer) {
+    // Show loading state first
     rightContainer.innerHTML = `
         <h2 style="margin: 0 0 1.5rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
             <i class="fas fa-stream"></i> Real-time Detection Feed
@@ -979,141 +1020,233 @@ function displayDetectionFeedSection(rightContainer) {
             <i class="fas fa-list"></i> Recent Detections
         </h4>
         
-        <!-- Scrollable detection feed area -->
-        <div style="
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 8px;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-        ">
-            <!-- Custom scrollbar styles -->
-            <style>
-                .container div::-webkit-scrollbar {
-                    width: 8px;
-                }
-                .container div::-webkit-scrollbar-track {
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 4px;
-                }
-                .container div::-webkit-scrollbar-thumb {
-                    background: rgba(255, 255, 255, 0.3);
-                    border-radius: 4px;
-                    transition: all 0.3s ease;
-                }
-                .container div::-webkit-scrollbar-thumb:hover {
-                    background: rgba(255, 255, 255, 0.5);
-                }
-            </style>
-            
-            ${detections.map(detection => `
-                <div style="
-                    margin-bottom: 1rem; 
-                    padding: 1rem; 
-                    background: rgba(255, 255, 255, 0.05); 
-                    border-radius: 8px; 
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-left: 4px solid ${detection.color};
-                ">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
-                            <i class="${detection.icon}" style="color: ${detection.color}; font-size: 1.2rem;"></i>
-                            <span style="font-weight: 600; color: var(--text-main);">${detection.filename}</span>
-                        </div>
-                        <span style="
-                            background: ${detection.badgeColor}; 
-                            color: white; 
-                            padding: 0.2rem 0.6rem; 
-                            border-radius: 12px; 
-                            font-size: 0.8rem;
-                            font-weight: 600;
-                            white-space: nowrap;
-                            margin-left: 10px;
-                        ">
-                            ${detection.confidence}
-                        </span>
-                    </div>
-                    <div style="color: var(--text-alt); font-size: 0.9rem; margin-bottom: 0.3rem;">
-                        ${detection.result}
-                    </div>
-                    <div style="color: var(--text-alt); font-size: 0.8rem; opacity: 0.8;">
-                        ${detection.timestamp}
-                    </div>
-                </div>
-            `).join('')}
+        <div class="loading" style="text-align: center; padding: 2rem;">
+            <div class="spinner"><i class="fas fa-cog fa-spin"></i></div>
+            <div>Loading recent detections...</div>
         </div>
     `;
+    
+    try {
+        // Fetch real detection data from API
+        const response = await makeApiRequest(API_ENDPOINTS.RECENT_RESULTS || '/api/recent-results');
+        
+        let detections = [];
+        
+        if (response.success && Array.isArray(response.data)) {
+            // Transform database results to UI format
+            detections = response.data.map(result => transformDetectionData(result));
+        } else {
+            console.warn('Failed to fetch recent results:', response.error);
+            // Show empty state instead of dummy data
+            detections = [];
+        }
+        
+        // Display the feed with real or empty data
+        rightContainer.innerHTML = `
+            <h2 style="margin: 0 0 1.5rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-stream"></i> Real-time Detection Feed
+            </h2>
+            
+            <h4 style="margin: 0 0 1rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-list"></i> Recent Detections
+            </h4>
+            
+            <!-- Scrollable detection feed area -->
+            <div style="
+                flex: 1;
+                overflow-y: auto;
+                padding-right: 8px;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+            ">
+                <!-- Custom scrollbar styles -->
+                <style>
+                    .container div::-webkit-scrollbar {
+                        width: 8px;
+                    }
+                    .container div::-webkit-scrollbar-track {
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 4px;
+                    }
+                    .container div::-webkit-scrollbar-thumb {
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+                    }
+                    .container div::-webkit-scrollbar-thumb:hover {
+                        background: rgba(255, 255, 255, 0.5);
+                    }
+                </style>
+                
+                ${detections.length > 0 ? detections.map(detection => `
+                    <div style="
+                        margin-bottom: 1rem; 
+                        padding: 1rem; 
+                        background: rgba(255, 255, 255, 0.05); 
+                        border-radius: 8px; 
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-left: 4px solid ${detection.color};
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                                <i class="${detection.icon}" style="color: ${detection.color}; font-size: 1.2rem;"></i>
+                                <span style="font-weight: 600; color: var(--text-main);">${detection.filename}</span>
+                            </div>
+                            <span style="
+                                background: ${detection.badgeColor}; 
+                                color: white; 
+                                padding: 0.2rem 0.6rem; 
+                                border-radius: 12px; 
+                                font-size: 0.8rem;
+                                font-weight: 600;
+                                white-space: nowrap;
+                                margin-left: 10px;
+                            ">
+                                ${detection.confidence}
+                            </span>
+                        </div>
+                        <div style="color: var(--text-alt); font-size: 0.9rem; margin-bottom: 0.3rem;">
+                            ${detection.result}
+                        </div>
+                        <div style="color: var(--text-alt); font-size: 0.8rem; opacity: 0.8;">
+                            ${detection.timestamp}
+                        </div>
+                    </div>
+                `).join('') : `
+                    <div style="
+                        text-align: center; 
+                        padding: 3rem 1rem; 
+                        color: var(--text-alt); 
+                        background: rgba(255, 255, 255, 0.02); 
+                        border-radius: 8px;
+                        border: 1px dashed rgba(255, 255, 255, 0.1);
+                    ">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                        <div style="font-size: 1.1rem; margin-bottom: 0.5rem;">No Recent Detections</div>
+                        <div style="font-size: 0.9rem; opacity: 0.7;">Analyzed files will appear here in real-time</div>
+                    </div>
+                `}
+            </div>
+        `;
+        
+    } catch (error) {
+        console.error('Detection feed error:', error);
+        rightContainer.innerHTML = `
+            <h2 style="margin: 0 0 1.5rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-stream"></i> Real-time Detection Feed
+            </h2>
+            
+            <h4 style="margin: 0 0 1rem 0; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-list"></i> Recent Detections
+            </h4>
+            
+            <div style="color: #c62828; padding: 1rem; background: #ffcdd2; border-radius: 8px;">
+                <strong><i class="fas fa-exclamation-triangle"></i> Connection Error:</strong> Cannot load recent detections<br>
+                <small>Check API connection</small>
+            </div>
+        `;
+    }
 }
 
 /**
- * Mock detection feed data
+ * Transform database detection result to UI format
  */
-function getRecentDetections() {
-    return [
-        {
-            filename: 'document.pdf',
-            result: 'Clean - No threats detected',
-            timestamp: '2 minutes ago',
-            confidence: '98.7%',
-            icon: 'fas fa-shield-alt',
-            color: '#4caf50',
-            badgeColor: '#4caf50'
-        },
-        {
-            filename: 'suspicious_file.exe',
-            result: 'Ransomware detected - WannaCry variant',
-            timestamp: '5 minutes ago',
-            confidence: '94.2%',
-            icon: 'fas fa-exclamation-triangle',
-            color: '#f44336',
-            badgeColor: '#f44336'
-        },
-        {
-            filename: 'application.exe',
-            result: 'Clean - Verified safe',
-            timestamp: '7 minutes ago',
-            confidence: '99.1%',
-            icon: 'fas fa-shield-alt',
-            color: '#4caf50',
-            badgeColor: '#4caf50'
-        },
-        {
-            filename: 'unknown_sample.dll',
-            result: 'Pending analysis - Queued',
-            timestamp: '9 minutes ago',
-            confidence: '--',
-            icon: 'fas fa-question-circle',
-            color: '#ff9800',
-            badgeColor: '#ff9800'
-        },
-        {
-            filename: 'installer.msi',
-            result: 'Clean - No malicious behavior',
-            timestamp: '12 minutes ago',
-            confidence: '97.8%',
-            icon: 'fas fa-shield-alt',
-            color: '#4caf50',
-            badgeColor: '#4caf50'
-        },
-        {
-            filename: 'installer.msi',
-            result: 'Clean - No malicious behavior',
-            timestamp: '12 minutes ago',
-            confidence: '97.8%',
-            icon: 'fas fa-shield-alt',
-            color: '#4caf50',
-            badgeColor: '#4caf50'
-        },
-        {
-            filename: 'installer.msi',
-            result: 'Clean - No malicious behavior',
-            timestamp: '12 minutes ago',
-            confidence: '97.8%',
-            icon: 'fas fa-shield-alt',
-            color: '#4caf50',
-            badgeColor: '#4caf50'
+function transformDetectionData(dbResult) {
+    const prediction = dbResult.prediction || 0;
+    const filename = dbResult.filename || 'Unknown file';
+    const createdAt = dbResult.created_at || dbResult.timestamp;
+    
+    // Extract confidence from analysis_result if available
+    let confidence = 'N/A';
+    if (dbResult.analysis_result && typeof dbResult.analysis_result === 'object') {
+        const analysisResult = dbResult.analysis_result;
+        if (analysisResult.confidence) {
+            confidence = `${(analysisResult.confidence * 100).toFixed(1)}%`;
         }
-    ];
+    }
+    
+    // Generate timestamp relative to now
+    const timestamp = formatRelativeTime(createdAt);
+    
+    // Determine result message based on prediction
+    let result, icon, color, badgeColor;
+    
+    if (prediction === 1) {
+        // Ransomware detected
+        result = 'Ransomware detected - Threat identified';
+        icon = 'fas fa-exclamation-triangle';
+        color = '#f44336';
+        badgeColor = '#f44336';
+    } else {
+        // Clean file
+        result = 'Clean - No threats detected';
+        icon = 'fas fa-shield-alt';
+        color = '#4caf50';
+        badgeColor = '#4caf50';
+    }
+    
+    // Try to get more specific result from analysis_result
+    if (dbResult.analysis_result && typeof dbResult.analysis_result === 'object') {
+        const analysisResult = dbResult.analysis_result;
+        
+        // Use final_label if available
+        if (analysisResult.final_label) {
+            if (prediction === 1) {
+                result = `${analysisResult.final_label} detected - Threat identified`;
+            } else {
+                result = `${analysisResult.final_label} - Verified safe`;
+            }
+        }
+        
+        // Add analysis mode information if available
+        if (analysisResult.analysis_mode) {
+            const modeMap = {
+                'signature_only': 'Signature analysis',
+                'signature_static': 'Static analysis',
+                'full_3_stage': 'Full pipeline analysis'
+            };
+            const modeText = modeMap[analysisResult.analysis_mode] || 'Analysis completed';
+            result = `${result.split(' - ')[0]} - ${modeText}`;
+        }
+    }
+    
+    return {
+        filename,
+        result,
+        timestamp,
+        confidence,
+        icon,
+        color,
+        badgeColor
+    };
+}
+
+/**
+ * Format timestamp to relative time (e.g., "2 minutes ago")
+ */
+function formatRelativeTime(timestamp) {
+    if (!timestamp) return 'Unknown time';
+    
+    const now = new Date();
+    const past = new Date(timestamp);
+    const diffMs = now - past;
+    
+    if (diffMs < 0) return 'Just now';
+    
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+    
+    if (diffSeconds < 60) {
+        return diffSeconds <= 1 ? 'Just now' : `${diffSeconds} seconds ago`;
+    } else if (diffMinutes < 60) {
+        return diffMinutes === 1 ? '1 minute ago' : `${diffMinutes} minutes ago`;
+    } else if (diffHours < 24) {
+        return diffHours === 1 ? '1 hour ago' : `${diffHours} hours ago`;
+    } else {
+        return diffDays === 1 ? '1 day ago' : `${diffDays} days ago`;
+    }
 }
 
 // ========================================

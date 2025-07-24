@@ -845,6 +845,42 @@ def dynamic_analysis_only():
         raw_prediction = dynamic_result.get('prediction', 'benign')
         prediction_int = 1 if raw_prediction == 'ransomware' else 0
         
+        # ========================================
+        # NEW: SAVE FEATURE VECTORS TO CSV
+        # ========================================
+        try:
+            logger.info("Extracting and saving feature vectors to CSV...")
+            
+            # Extract features using the dynamic detector's feature extractor
+            if hasattr(dynamic_detector, 'feature_extractor') and cuckoo_report:
+                features_df = dynamic_detector.feature_extractor.extract_features_from_cuckoo_json(cuckoo_report)
+                
+                # Determine labels - you can modify this logic based on your needs
+                family_label = 0  # Unknown family for now
+                type_label = prediction_int  # Use the prediction result as ground truth
+                
+                # Save to CSV (creates new file or appends to existing)
+                csv_path = "dynamic_features_dataset.csv"
+                dynamic_detector.feature_extractor.save_features_to_csv(
+                    features_df=features_df,
+                    csv_path=csv_path,
+                    family_label=family_label,
+                    type_label=type_label
+                )
+                
+                logger.info(f"Feature vectors saved to {csv_path}")
+                
+            else:
+                logger.warning("Feature extractor not available or Cuckoo report missing - skipping CSV save")
+                
+        except Exception as csv_error:
+            logger.warning(f"Failed to save feature vectors to CSV: {csv_error}")
+            # Don't fail the entire analysis if CSV saving fails
+        
+        # ========================================
+        # END OF NEW FEATURE SAVING CODE
+        # ========================================
+        
         # Prepare result
         result = {
             'status': 'success',

@@ -31,6 +31,85 @@ class DynamicFeatureExtractor:
         if feature_mapping_file:
             self._load_feature_mapping(feature_mapping_file)
     
+    def save_features_to_csv(self, features_df: pd.DataFrame, csv_path: str, 
+                         sample_id: int = None, family_label: int = 0, type_label: int = 0,
+                         create_new: bool = False) -> None:
+        """
+        Save extracted feature vectors to CSV in training dataset format
+        
+        Args:
+            features_df: DataFrame with extracted features (from extract_features_from_cuckoo_json)
+            csv_path: Path to save/append the CSV file
+            sample_id: Unique sample identifier (auto-generated if None)
+            family_label: Family label (0 for unknown/benign, >0 for known families)
+            type_label: Binary classification label (0=benign, 1=malware)
+            create_new: If True, create new CSV; if False, append to existing
+        """
+        try:
+            # Generate sample_id if not provided
+            if sample_id is None:
+                if os.path.exists(csv_path) and not create_new:
+                    # Read existing CSV to get next sample_id
+                    existing_df = pd.read_csv(csv_path)
+                    if 'sample_id' in existing_df.columns and len(existing_df) > 0:
+                        sample_id = existing_df['sample_id'].max() + 1
+                    else:
+                        sample_id = 1
+                else:
+                    sample_id = 1
+            
+            # Prepare the row to add
+            new_row = {
+                'sample_id': sample_id,
+                'sample_type': 1,  # 1 for dynamic analysis
+                'family_label': family_label,
+                'type_label': type_label
+            }
+            
+            # Add all feature columns
+            for col in features_df.columns:
+                new_row[col] = features_df[col].iloc[0]
+            
+            # Create DataFrame for the new row
+            new_row_df = pd.DataFrame([new_row])
+            
+            # Handle CSV creation/appending
+            if create_new or not os.path.exists(csv_path):
+                # Create new CSV
+                new_row_df.to_csv(csv_path, index=False)
+                logger.info(f"Created new CSV with 1 sample: {csv_path}")
+            else:
+                # Append to existing CSV
+                # Read existing CSV to ensure column consistency
+                existing_df = pd.read_csv(csv_path)
+                
+                # Check if columns match
+                existing_cols = set(existing_df.columns)
+                new_cols = set(new_row_df.columns)
+                
+                if existing_cols != new_cols:
+                    logger.warning("Column mismatch detected - aligning columns")
+                    
+                    # Get all unique columns
+                    all_cols = ['sample_id', 'sample_type', 'family_label', 'type_label']
+                    feature_cols = sorted([col for col in (existing_cols | new_cols) 
+                                        if col not in all_cols])
+                    all_cols.extend(feature_cols)
+                    
+                    # Reindex both DataFrames to have same columns
+                    existing_df = existing_df.reindex(columns=all_cols, fill_value=0)
+                    new_row_df = new_row_df.reindex(columns=all_cols, fill_value=0)
+                
+                # Append new row
+                combined_df = pd.concat([existing_df, new_row_df], ignore_index=True)
+                combined_df.to_csv(csv_path, index=False)
+                
+                logger.info(f"Appended sample {sample_id} to CSV: {csv_path} (Total: {len(combined_df)})")
+                
+        except Exception as e:
+            logger.error(f"Failed to save features to CSV: {e}")
+            raise
+
     def extract_features_from_cuckoo_json(self, cuckoo_report: Union[str, dict]) -> pd.DataFrame:
         """
         Main extraction method - converts Cuckoo report to feature DataFrame
