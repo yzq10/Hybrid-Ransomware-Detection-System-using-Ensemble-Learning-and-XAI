@@ -85,3 +85,43 @@ CUCKOO_API_URL = 'http://your-cuckoo-server:8090'
 
 ### Note
 Without Cuckoo, the system will run in **static analysis only** mode.
+
+## 📖 Usage
+
+The system offers flexible analysis modes to suit different security requirements and environments:
+
+### 🔄 Full 3-Stage Pipeline (Recommended)
+Complete analysis with maximum accuracy and detailed explanations:
+- **Stage 1**: Signature Analysis (VirusTotal)
+- **Stage 2**: Static Analysis (PE headers, APIs, ML models)
+- **Stage 3**: Dynamic Analysis (Cuckoo Sandbox behavioral analysis)
+
+```bash
+# Access via web interface
+http://localhost:5000
+
+# Upload files and select "Full Analysis"
+# Results include ensemble predictions, confidence scores, and XAI explanations
+```
+
+### 🎯 Individual Stage Analysis
+For targeted analysis or when specific components are unavailable:
+
+#### Signature Analysis Only
+Quick threat intelligence lookup for known malware:
+- Fast detection of known ransomware families
+- Minimal system resources required
+- Immediate results from VirusTotal database
+
+#### Static Analysis Only  
+In-depth file structure analysis without execution:
+- PE header analysis and API call extraction
+- Machine learning ensemble predictions
+- SHAP-based feature importance explanations
+- Suitable for air-gapped environments
+
+#### Dynamic Analysis Only
+Behavioral analysis in controlled sandbox environment:
+- Real-time malware behavior monitoring
+- Network traffic and file system activity tracking
+- Registry modifications and process creation analysis
