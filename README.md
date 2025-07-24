@@ -125,3 +125,17 @@ Behavioral analysis in controlled sandbox environment:
 - Real-time malware behavior monitoring
 - Network traffic and file system activity tracking
 - Registry modifications and process creation analysis
+
+## 🏗️ System Architecture
+
+### **Frontend**: HTML, CSS, JavaScript
+### **Backend**: Python Flask API
+### **Database**: SQLite / MySQL
+### **Machine Learning**: Ensemble Models
+- **XGBoost**: Gradient boosting classifier
+- **Random Forest**: Tree-based ensemble model
+- **SVM**: Support Vector Machine with preprocessing
+- **SHAP**: Explainable AI for model interpretability
+### **External APIs**:
+- **VirusTotal API**: Signature-based threat detection
+- **Cuckoo Sandbox**: Dynamic behavioral analysis
