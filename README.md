@@ -36,32 +36,35 @@ A comprehensive Windows malware detection system that combines static analysis, 
 ### Step-by-Step Installation
 
 #### 1. Repository Setup
-- Clone the repository from GitHub
-- Navigate to the project directory
+```bash
+git clone https://github.com/yourusername/hybrid-ransomware-detection.git
+cd hybrid-ransomware-detection
+```
 
 #### 2. Environment Preparation
-- Create a Python virtual environment
-- Activate the virtual environment
-- Verify Python version compatibility
+```bash
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+python --version
+```
 
 #### 3. Dependency Installation
-- Install all required Python packages using pip
-- Verify successful installation of core libraries:
-  - Flask (web framework)
-  - scikit-learn (machine learning)
-  - XGBoost (gradient boosting)
-  - pandas (data manipulation)
-  - numpy (numerical computing)
-  - SHAP (explainable AI)
-  - pefile (PE file analysis)
-  - requests (API communication)
+```bash
+pip install -r requirements.txt
+pip list | grep -E "(Flask|scikit-learn|xgboost|pandas|numpy|shap|pefile|requests)"
+```
 
 #### 4. API Configuration
-- Obtain VirusTotal API key
-- Configure API key as environment variable
-- Set security mode preferences
-- Test API connectivity
+```bash
+export VT_API_KEY="your_virustotal_api_key_here"
+# Or create .env file:
+echo "VT_API_KEY=your_virustotal_api_key_here" > .env
+```
 
 #### 5. Start Application
 ```bash
 python app.py
+```
