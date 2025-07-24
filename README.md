@@ -1,6 +1,6 @@
-# Hybrid Ransomware Detection System
+# Hybrid Ransomware Detection System using Ensemble Learning and XAI
 
-A comprehensive Windows malware detection system that combines static analysis, dynamic behavioral analysis, and explainable AI for accurate ransomware detection with detailed explanations.
+A comprehensive Windows ransomware detection system that combines static analysis, dynamic behavioral analysis, ensemble learnin and explainable AI for accurate ransomware detection with detailed explanations.
 
 ## 🚀 Features
 
@@ -138,3 +138,9 @@ Behavioral analysis in controlled sandbox environment:
 * **External APIs**:
   - **VirusTotal API**: Signature-based threat detection
   - **Cuckoo Sandbox**: Dynamic behavioral analysis
+
+## 🤝 Contributing
+This project was developed as a Final Year Project (FYP) demonstrating the practical implementation of hybrid ransomware detection using multi-stage analysis, ensemble learning and explainable AI for cybersecurity applications.
+
+## 📄 License
+This project is for educational and research purposes.
