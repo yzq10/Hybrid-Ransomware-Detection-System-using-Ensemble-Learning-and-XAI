@@ -2,8 +2,6 @@
 
 A comprehensive Windows malware detection system that combines static analysis, dynamic behavioral analysis, and explainable AI for accurate ransomware detection with detailed explanations.
 
----
-
 ## 🚀 Features
 
 ### Multi-Stage Analysis Pipeline
