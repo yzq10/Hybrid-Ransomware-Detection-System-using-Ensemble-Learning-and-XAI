@@ -68,3 +68,20 @@ echo "VT_API_KEY=your_virustotal_api_key_here" > .env
 ```bash
 python app.py
 ```
+
+## 🦆 Cuckoo Sandbox Setup
+
+For full dynamic analysis capabilities, install Cuckoo Sandbox on a separate Linux machine.
+
+### Installation Guide
+Refer to the following link for complete installation instructions:
+https://github.com/OpenSecureCo/Demos/blob/main/Cuckoo%20Install
+
+### Update Application Config
+```python
+# In app.py
+CUCKOO_API_URL = 'http://your-cuckoo-server:8090'
+```
+
+### Note
+Without Cuckoo, the system will run in **static analysis only** mode.
